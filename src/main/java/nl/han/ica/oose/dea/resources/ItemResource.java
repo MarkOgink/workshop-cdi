@@ -12,11 +12,11 @@ import javax.ws.rs.core.UriBuilder;
 @Path("/items")
 public class ItemResource {
 
-    private ItemService itemservice;
+    private ItemService itemService;
 
     @Inject
     public void setItemService(ItemService itemservice) {
-        this.itemservice = itemservice;
+        this.itemService = itemservice;
     }
 
     @GET
@@ -28,13 +28,13 @@ public class ItemResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getJsonItems() {
-        return Response.ok().entity(itemservice.getAll()).build();
+        return Response.ok().entity(itemService.getAll()).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addItem(ItemDTO itemDTO) {
-        itemservice.addItem(itemDTO);
+        itemService.addItem(itemDTO);
 
         return Response.created(
             UriBuilder.fromPath("items/{id}").build(itemDTO.getId())
@@ -45,14 +45,14 @@ public class ItemResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItem(@PathParam("id") int id) {
-        return Response.ok().entity(itemservice.getItem(id)).build();
+        return Response.ok().entity(itemService.getItem(id)).build();
     }
 
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteItem(@PathParam("id") int id) {
-        itemservice.deleteItem(id);
+        itemService.deleteItem(id);
         return Response.ok().build();
     }
 }
